@@ -4,9 +4,33 @@
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>Controllers.HomeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>Controllers.UserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logoutController</servlet-name>
+        <servlet-class>Controllers.logoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestFilter</servlet-name>
+        <servlet-class>Controllers.TestFilter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestFilter</servlet-name>
+        <url-pattern>/TestFilter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  *
@@ -55,28 +56,16 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
- String username = request.getParameter("username");
- String password = request.getParameter("password");
- String [] favorite = request.getParameterValues("favorite1");
- String gender = request.getParameter("gender");
- String role = request.getParameter("role");
-    response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>username = " + username + "</h1>");
-            out.println("<h1>password = " + password + "</h1>");
-            out.println("<h1>favorite = " + favorite + "</h1>");
-            out.println("<h1>gender = " + gender + "</h1>");
-             out.println("<h1>role = " + role + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String[] favorite = request.getParameterValues("favorite1");
+        String gender = request.getParameter("gender");
+        String role = request.getParameter("role");
+        request.setAttribute("username", username);
+        request.setAttribute("password", password);
+        String[]  test = {"aa", "bbb"};
+        request.setAttribute("favorite", favorite);
+        request.getRequestDispatcher("result.jsp").forward(request, response);
     }
 
     /**
@@ -104,24 +93,13 @@ public class HomeServlet extends HttpServlet {
 //        String role = request.getParameter("role");
 //        System.out.println("role" + role);
 //        System.out.println("gender" + gender);
-        System.out.println("username" + username);
-        System.out.println("password" + password);
-//        request.setAttribute("username", username);
-//        request.setAttribute("password", password);
+        request.setAttribute("username", username);
+        request.setAttribute("password", password);
+        request.getServletContext().setAttribute("username", username);
+        request.getServletContext().setAttribute("password", password);
+        request.getRequestDispatcher("ketqua.jsp").forward(request, response);
 //        processResult(request, response);
-  response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     /**
