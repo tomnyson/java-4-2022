@@ -48,19 +48,20 @@ public class TestFilter implements Filter {
     public void doFilter (ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(false);
-        String loginURI = request.getContextPath() + "/login.jsp";
-
-    boolean loggedIn = session != null && session.getAttribute("username") != null;
-        boolean loginRequest = request.getRequestURI().equals(loginURI);
-        System.out.println("filter code ");
-        if (loggedIn || loginRequest) {
-            chain.doFilter(request, response);
-        } else {
-            response.sendRedirect(loginURI);
-        }
+//        HttpSession session = request.getSession(false);
+//        String loginURI = request.getContextPath() + "/login.jsp";
+//
+//    boolean loggedIn = session != null && session.getAttribute("username") != null;
+//        boolean loginRequest = request.getRequestURI().equals(loginURI);
+//        System.out.println("filter code ");
+//        if (loggedIn || loginRequest) {
+//            chain.doFilter(request, response);
+//        } else {
+//            response.sendRedirect(loginURI);
+//        }
+         chain.doFilter(request, response);
     }
-
+    
     @Override
     public void destroy() {
     }

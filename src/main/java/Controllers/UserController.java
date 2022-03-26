@@ -5,7 +5,10 @@
  */
 package Controllers;
 
+import Utils.PasswordHelper;
+import DAO.UserDao;
 import DTO.UserDTO;
+import Utils.PasswordHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -83,39 +86,66 @@ public class UserController extends HttpServlet {
         //b1
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        //b2
-        UserDTO user = new UserDTO();
-        boolean isLogin = user.isLogin(username, password);
-//        processRequest(request, response);
-//b3:
-//System.out.println("Controllers.UserController.doPost()" + isLogin);
-        if (isLogin) {
-            // true
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            // cookie
+        String action = request.getParameter("action");
+        if (action.equals("register")) {
+            String email = request.getParameter("email");
+            String password_hash = PasswordHelper.encrypt(password);
+            UserDTO user = new UserDTO(username, password_hash, email, "user");
+            UserDao userdao = new UserDao();
+            boolean isExist = userdao.isUserExist(username);
+            if (isExist) {
+                request.setAttribute("message", "you had account");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+            boolean isCreate = userdao.create(user);
+            if (isCreate) {
+                request.setAttribute("message", "create account success");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+            // username đã tồn tại ?
+            //xl dang ky
+        } else {
+
+            //b2
+            UserDTO user = new UserDTO();
+            UserDao userDao = new UserDao();
+            String has_pasword = PasswordHelper.encrypt(password);
+            boolean isLogin = userDao.isLogin(username, has_pasword);
+            if (isLogin) {
+                // true
+                UserDTO userProfile = (UserDTO) userDao.getDetailByUserName(username);
+                request.setAttribute("username", username);
+                request.setAttribute("password", password);
+                request.setAttribute("role", userProfile.getRole());
+                // cookie
 //            Cookie cookieUsername = new Cookie("username", username);
 //            Cookie cookiePassword = new Cookie("username", username);
 //            cookieUsername.setMaxAge(60 * 60 * 24);
 //            cookiePassword.setMaxAge(60 * 60 * 24);
 //            response.addCookie(cookieUsername);
 //            response.addCookie(cookiePassword);
-            // session
+                // session
 //            HttpSession session = request.getSession();
 //            //set gia tri cho session
 //            session.setAttribute("login", true);
 //            session.setAttribute("username", username);
 //            session.setAttribute("password", password);
-            // tao ra đối tượng cookie
-            Cookie cookieAuth = new Cookie("isAuth", "true");
-            cookieAuth.setMaxAge(60*60);
-            response.addCookie(cookieAuth);
-            
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
-        } else {
-            request.setAttribute("message", "username or password not correct");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+                // tao ra đối tượng cookie
+                Cookie cookieAuth = new Cookie("isAuth", "true");
+                cookieAuth.setMaxAge(60 * 60);
+                response.addCookie(cookieAuth);
+                if (userProfile.getRole().equals("admin")) {
+                    request.getRequestDispatcher("./admin/dashboard.jsp").forward(request, response);
+                    return;
+                }
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "username or password not correct");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         }
+
     }
 
     /**

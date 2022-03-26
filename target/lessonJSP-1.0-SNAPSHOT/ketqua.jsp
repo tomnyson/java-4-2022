@@ -12,6 +12,23 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+            pageContext.setAttribute("username", "abc");
+
+        %>
+        <p>param</p>
+        <h1> username: ${param.username}</h1>
+        <h1> password ${param.password}</h1>
+        <p>requestscope</p>
+        <h1> username: ${requestscope.username}</h1>
+        <h1> password ${requestscope.password}</h1>
+        <p>pageScope</p>
+        <h1> username: ${pageScope.username}</h1>
+        <h1> password ${pageScope.password}</h1>
+        <p>applycationScope</p>
+        <h1> username: ${applicationScope.username}</h1>
+        <h1> password ${applicationScope.password}</h1>
+        <h1>${username}</h1>
+        <h1>${password}</h1>
     </body>
 </html>

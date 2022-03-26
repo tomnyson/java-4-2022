@@ -12,7 +12,7 @@
         <input id="so1" type="text" name="username" placeholder="username"/>
         <input id="so2" type="password" name="password"  placeholder="password"/>
         <div class="center">
-            <button  type="submit" >Login</button>
+            <button  type="submit" name="action" value="login" >Login</button>
             <p id="ketqua">${message}</p>
         </div>
 

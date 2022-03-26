@@ -16,6 +16,10 @@
         <servlet-name>TestFilter</servlet-name>
         <servlet-class>Controllers.TestFilter</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminCategoryController</servlet-name>
+        <servlet-class>Controllers.Admin.AdminCategoryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>TestFilter</servlet-name>
         <url-pattern>/TestFilter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminCategoryController</servlet-name>
+        <url-pattern>/admin/AdminCategoryController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

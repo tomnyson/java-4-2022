@@ -1,1 +1,12 @@
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/DTO/CategoryDTO.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/DTO/UserDTO.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/DAO/CategoryDao.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Utils/PasswordHelper.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/UserController.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/Admin/AdminCategoryController.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/logoutController.java
 /Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/HomeServlet.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/DAO/UserDao.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Utils/DBProvider.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/CategoryController.java
+/Users/tomnyson/NetBeansProjects/lessonJSP/src/main/java/Controllers/TestFilter.java
