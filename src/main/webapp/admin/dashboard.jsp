@@ -48,7 +48,15 @@
                     <div class="content-wrapper">
                         <!-- Content -->
                         <div class="container-xxl flex-grow-1 container-p-y">
-                            <c:import url="pages/forms/categoryForm.jsp"/> 
+                            <%--<c:import url="pages/forms/categoryForm.jsp"/>--%>
+                             <c:choose>
+                                <c:when test="${sessionScope.view != null}">
+                                    <c:import url="${sessionScope.view}"/> 
+                                </c:when>
+                                <c:otherwise>
+                                    <c:import url="pages/404.jsp"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <c:import url="includes/footer.jsp"/>
                         </body>

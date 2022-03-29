@@ -9,10 +9,16 @@ import DAO.CategoryDao;
 import DTO.CategoryDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,16 +38,37 @@ public class AdminCategoryController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        String description = request.getParameter("description");
-        if(!name.equals("")) {
-            System.out.println("image"+image);
-             System.out.println("description"+description);
-            CategoryDTO dto = new CategoryDTO(name, image, description);
-            CategoryDao dao = new CategoryDao();
-            boolean isCreate = dao.create(dto);
-        }
+        String method = request.getMethod();
+        System.out.println("method" + method);
+           if(method.equals("GET")) {
+            try {
+                // Xử lý get method
+                /**
+                 * b1: lay ds cat => db => dao
+                 * b2 = set bien attribute => client
+                 */
+                HttpSession session = request.getSession();
+                CategoryDao dao = new CategoryDao();
+                List<CategoryDTO> list = new ArrayList<CategoryDTO>();
+                list = dao.getList();
+                request.setAttribute("list", list);
+                System.out.println(list.size());
+                session.setAttribute("view", "pages/category.jsp");
+                request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminCategoryController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           }
+//        String name = request.getParameter("name");
+//        String image = rsetequest.getParameter("image");
+//        String description = request.getParameter("description");
+//        if(!name.equals("")) {
+//            System.out.println("image"+image);
+//             System.out.println("description"+description);
+//            CategoryDTO dto = new CategoryDTO(name, image, description);
+//            CategoryDao dao = new CategoryDao();
+//            boolean isCreate = dao.create(dto);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

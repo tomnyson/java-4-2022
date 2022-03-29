@@ -16,6 +16,7 @@ import DTO.UserDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,26 +65,26 @@ public class CategoryDao {
         }
     }
 
-    public List<CategoryDTO> getList() {
-        List<CategoryDTO> listCat = new ArrayList<CategoryDTO>();
+    public List<CategoryDTO> getList() throws SQLException {
+        List<CategoryDTO> list = new ArrayList<CategoryDTO>();
         try {
-            String sql = "SELECT * FROM category";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rst = pst.executeQuery();
-            if (rst.next()) {
-                CategoryDTO cat = new CategoryDTO();
-                cat.setId(rst.getInt("id"));
-                cat.setName(rst.getString("name"));
-                cat.setDescription(rst.getString("description"));
-                cat.setImage(rst.getString("image"));
-                listCat.add(cat);
+            String sql = "select * from category";
+            if (conn != null) {
+                PreparedStatement pst = conn.prepareStatement(sql);
+                ResultSet resultSet = pst.executeQuery();
+                while (resultSet.next()) {
+                    CategoryDTO category = new CategoryDTO();
+                    category.setId(resultSet.getInt("id"));
+                    category.setName(resultSet.getString("name"));
+                    category.setDescription(resultSet.getString("description"));
+                    category.setImage(resultSet.getString("image"));
+                    list.add(category);
+                }
             }
-            return listCat;
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return listCat;
+        return list;
     }
     
      public boolean update(CategoryDTO cat) {

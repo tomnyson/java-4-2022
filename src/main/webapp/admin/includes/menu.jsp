@@ -22,7 +22,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item">
-              <a href="index.html" class="menu-link">
+              <a href="${pageContext.request.contextPath}/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -37,7 +37,7 @@
 
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
+                  <a href="${pageContext.request.contextPath}/admin/AdminCategoryController" class="menu-link">
                     <div data-i18n="Without menu">category</div>
                   </a>
                 </li>
