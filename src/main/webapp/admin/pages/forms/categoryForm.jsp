@@ -15,9 +15,10 @@
     <input type="text" name="image" class="form-control"
            placeholder="description" />
     <label for="exampleFormControlTextarea1" class="form-label">description</label>
-    <textarea class="form-control" name="description" rows="3"></textarea>
+    <textarea class="form-control" name="description" id="txtDescription" rows="3"></textarea>
     <button class="btn btn-primary">create</button>
 </form>
+
 
 <style>
     .error {

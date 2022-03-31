@@ -17,23 +17,23 @@
     </head>
     <body>
         <button class="btn btn-outline-primary " id="btnCreate">add new</button>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>name</th>
-                        <th>description</th>
-                        <th>image</th>
-                         <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                 
-                  
-                    <c:forEach items="${list}" var="cat">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>description</th>
+                    <th>image</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                <c:forEach items="${list}" var="cat">
                     <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${cat.getName()}</strong></td>
                         <td>${cat.getDescription()}</td>
-                          <td>${cat.getImage()}</td>
+                        <td>${cat.getImage()}</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
@@ -44,27 +44,51 @@
                             </div>
                         </td>
                     </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                </c:forEach>
+            </tbody>
+        </table>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="catModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">create category</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
+
                     <div class="modal-body">
-                        <p>Croissant jelly beans donut apple pie. Caramels bonbon lemon drops. Sesame snaps lemon drops lemon drops liquorice icing bonbon pastry pastry carrot cake. Dragée sweet sweet roll sugar plum.</p>
-                        <p>Jelly-o cookie jelly gummies pudding cheesecake lollipop macaroon. Sweet chocolate bar sweet roll carrot cake. Sweet roll sesame snaps fruitcake brownie bear claw toffee bonbon brownie.</p>
+                        <form id="categoryForm1"  method="post" action="AdminCategoryController">
+                            <%--<c:import url="${pageContext.request.contextPath}/admin/forms/categoryForm.jsp"/>--%> 
+
+                            <label for="defaultFormControlInput" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" id="txtName"
+                                   placeholder="name" />
+                            <span class="error" id="error-name"></span>
+                            <label for="defaultFormControlInput" class="form-label">image</label>
+                            <input type="text" name="image" class="form-control"
+                                   placeholder="description" />
+                            <span class="error" id="error-des"></span>
+                            <label for="exampleFormControlTextarea1" class="form-label">description</label>
+                            <textarea class="form-control" id="txtDescription" name="description" rows="3"></textarea>
+                            <button style="margin-top: 30px " type="submit"  class="btn btn-primary">Save</button>
+                        </form>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="bs-toast toast fade show bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="assets/img/avatars/1.png" class="d-block w-px-20 h-auto rounded me-2" alt="" />
+                <div class="me-auto fw-semibold">Bootstrap</div>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Fruitcake chocolate bar tootsie roll gummies gummies jelly beans cake.
             </div>
         </div>
     </body>

@@ -7,10 +7,13 @@ package Controllers.Admin;
 
 import DAO.CategoryDao;
 import DTO.CategoryDTO;
+import Utils.GlobalFunc;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,12 +43,11 @@ public class AdminCategoryController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String method = request.getMethod();
         System.out.println("method" + method);
-           if(method.equals("GET")) {
+        if (method.equals("GET")) {
             try {
                 // Xử lý get method
                 /**
-                 * b1: lay ds cat => db => dao
-                 * b2 = set bien attribute => client
+                 * b1: lay ds cat => db => dao b2 = set bien attribute => client
                  */
                 HttpSession session = request.getSession();
                 CategoryDao dao = new CategoryDao();
@@ -58,7 +60,48 @@ public class AdminCategoryController extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminCategoryController.class.getName()).log(Level.SEVERE, null, ex);
             }
-           }
+        } else {
+            /**
+             * b1: parse dữ dữ liệu từ user JSON b2: dùng GJSOn convert json to
+             * object g.fromJson(body, CategoryDTO.class); b3: them du lieu xong
+             * db va get statuves tra b4: tra status ve cho nguoi dung bang
+             */
+            String body = GlobalFunc.parseBody(request);
+            Gson g = new Gson();
+            CategoryDTO cat = g.fromJson(body, CategoryDTO.class);
+            String name = cat.getName();
+            String des = cat.getDescription();
+            String image = cat.getImage();
+            HashMap<String, Object> person
+                    = new HashMap<String, Object>();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            
+            if (!name.equals("") && !des.equals("")) {
+                CategoryDTO dto = new CategoryDTO(name, des, image);
+                CategoryDao dao = new CategoryDao();
+                int isCreate = dao.create(dto);
+                if (isCreate > 0) {
+                    person.put("message", "tạo thành công");
+                    // lay thong tin category vừa tạo
+                    CategoryDTO detail = dao.getDetailById(isCreate);
+                     person.put("message", "tạo thành công");
+                     person.put("data", detail);
+                     String json = new Gson().toJson(person);
+                    response.getWriter().write(json);
+                    return;
+                }
+               
+                String json = new Gson().toJson(person);
+                response.getWriter().write(json);
+            } else {
+                person.put("message", "invalid data");
+                response.setStatus(400);
+                String json = new Gson().toJson(person);
+                response.getWriter().write(json);
+            }
+            System.out.println("${body1}" + body);
+        }
 //        String name = request.getParameter("name");
 //        String image = rsetequest.getParameter("image");
 //        String description = request.getParameter("description");

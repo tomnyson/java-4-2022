@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Utils.GlobalFunc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -72,7 +73,9 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            String body = GlobalFunc.parseBody(request);
+            System.out.println("${body1}"+body);
+            
     }
 
     /**

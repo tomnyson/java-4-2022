@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,24 +25,36 @@ public class CategoryDao {
 
     Connection conn = DBProvider.getConnection();
 
-    public boolean create(CategoryDTO cat) {
+    public int create(CategoryDTO cat) {
         boolean result = false;
+        int id = 0;
         try {
             String sql = "INSERT INTO category(name, description, image) VALUES(?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
+            PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, cat.getName());
             pst.setString(2, cat.getDescription());
             pst.setString(3, cat.getImage());
             int ketqua = pst.executeUpdate();
             if (ketqua > 0) {
-                result = true;
+
+                if (pst.executeUpdate() > 0) {
+                    // Retrieves any auto-generated keys created as a result of executing this Statement object
+
+                    ResultSet generatedKeys = pst.getGeneratedKeys();
+
+                    if (generatedKeys.next()) {
+                        id = generatedKeys.getInt(1);
+                    }
+                    System.out.println("id" + id);
+                }
+                return id;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return result;
+        return id;
     }
 
     public CategoryDTO getDetailById(int id) {
@@ -56,8 +69,9 @@ public class CategoryDao {
                 cat.setName(rst.getString("name"));
                 cat.setDescription(rst.getString("description"));
                 cat.setImage(rst.getString("image"));
+                return cat;
             }
-            return cat;
+            return null;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +82,7 @@ public class CategoryDao {
     public List<CategoryDTO> getList() throws SQLException {
         List<CategoryDTO> list = new ArrayList<CategoryDTO>();
         try {
-            String sql = "select * from category";
+            String sql = "select * from category ORDER BY id DESC";
             if (conn != null) {
                 PreparedStatement pst = conn.prepareStatement(sql);
                 ResultSet resultSet = pst.executeQuery();
@@ -86,8 +100,8 @@ public class CategoryDao {
         }
         return list;
     }
-    
-     public boolean update(CategoryDTO cat) {
+
+    public boolean update(CategoryDTO cat) {
         boolean result = false;
         try {
             String sql = "UPDATE category set name =?, description=?, image =? where id=?";
@@ -95,7 +109,7 @@ public class CategoryDao {
             pst.setString(1, cat.getName());
             pst.setString(2, cat.getDescription());
             pst.setString(3, cat.getImage());
-             pst.setInt(4, cat.getId());
+            pst.setInt(4, cat.getId());
             int ketqua = pst.executeUpdate();
             if (ketqua > 0) {
                 result = true;
@@ -107,8 +121,8 @@ public class CategoryDao {
 
         return result;
     }
-     
-     public boolean delete(int id) {
+
+    public boolean delete(int id) {
         boolean result = false;
         try {
             String sql = "DELETE from category where id=?";
@@ -125,6 +139,5 @@ public class CategoryDao {
 
         return result;
     }
-
 
 }
