@@ -36,8 +36,8 @@ public class CategoryDao {
             pst.setString(3, cat.getImage());
             int ketqua = pst.executeUpdate();
             if (ketqua > 0) {
-
-                if (pst.executeUpdate() > 0) {
+                System.out.println("go here test");
+                if (ketqua > 0) {
                     // Retrieves any auto-generated keys created as a result of executing this Statement object
 
                     ResultSet generatedKeys = pst.getGeneratedKeys();
@@ -111,6 +111,7 @@ public class CategoryDao {
             pst.setString(3, cat.getImage());
             pst.setInt(4, cat.getId());
             int ketqua = pst.executeUpdate();
+            System.out.println("ketqua"+cat.getId());
             if (ketqua > 0) {
                 result = true;
             }

@@ -49,7 +49,7 @@
                         <!-- Content -->
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <%--<c:import url="pages/forms/categoryForm.jsp"/>--%>
-                             <c:choose>
+                            <c:choose>
                                 <c:when test="${sessionScope.view != null}">
                                     <c:import url="${sessionScope.view}"/> 
                                 </c:when>

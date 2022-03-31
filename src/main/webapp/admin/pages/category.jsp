@@ -17,7 +17,7 @@
     </head>
     <body>
         <button class="btn btn-outline-primary " id="btnCreate">add new</button>
-        <table class="table">
+        <table id="catTable" class="table">
             <thead>
                 <tr>
                     <th>name</th>
@@ -30,15 +30,19 @@
 
 
                 <c:forEach items="${list}" var="cat">
-                    <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${cat.getName()}</strong></td>
+                    <tr data-id="${cat.getId()}">
+                        <td> <strong>${cat.getName()}</strong></td>
                         <td>${cat.getDescription()}</td>
                         <td>${cat.getImage()}</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>Edit</a>
+                                    <a class="dropdown-item" href="javascript:void(0);" onClick="EditCategory(${cat.getId()}, {
+                                                'name': '${cat.getName()}',
+                                                'description':'${cat.getName()}',
+                                                'image': '${cat.getImage()}'
+                                            })" ><i class="bx bx-edit-alt me-1"></i>Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>Delete</a>
                                 </div>
                             </div>
@@ -60,18 +64,18 @@
                     <div class="modal-body">
                         <form id="categoryForm1"  method="post" action="AdminCategoryController">
                             <%--<c:import url="${pageContext.request.contextPath}/admin/forms/categoryForm.jsp"/>--%> 
-
+                              <input type="hidden" class="form-control" name="id" id="txtId"
                             <label for="defaultFormControlInput" class="form-label">Name</label>
                             <input type="text" class="form-control" name="name" id="txtName"
                                    placeholder="name" />
                             <span class="error" id="error-name"></span>
                             <label for="defaultFormControlInput" class="form-label">image</label>
-                            <input type="text" name="image" class="form-control"
+                            <input type="text" name="image" id="image" class="form-control"
                                    placeholder="description" />
                             <span class="error" id="error-des"></span>
                             <label for="exampleFormControlTextarea1" class="form-label">description</label>
                             <textarea class="form-control" id="txtDescription" name="description" rows="3"></textarea>
-                            <button style="margin-top: 30px " type="submit"  class="btn btn-primary">Save</button>
+                            <button style="margin-top: 30px " type="submit" class="btn btn-primary">Save</button>
                         </form>
 
                     </div>

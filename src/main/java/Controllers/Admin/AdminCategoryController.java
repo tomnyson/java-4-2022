@@ -60,12 +60,9 @@ public class AdminCategoryController extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(AdminCategoryController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            /**
-             * b1: parse dữ dữ liệu từ user JSON b2: dùng GJSOn convert json to
-             * object g.fromJson(body, CategoryDTO.class); b3: them du lieu xong
-             * db va get statuves tra b4: tra status ve cho nguoi dung bang
-             */
+        } else if (method.equals("PUT")) {
+
+            //chuc nang update
             String body = GlobalFunc.parseBody(request);
             Gson g = new Gson();
             CategoryDTO cat = g.fromJson(body, CategoryDTO.class);
@@ -76,42 +73,68 @@ public class AdminCategoryController extends HttpServlet {
                     = new HashMap<String, Object>();
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            
+
+            if (!name.equals("") && !des.equals("")) {
+                CategoryDTO dto = new CategoryDTO(name, des, image);
+                CategoryDao dao = new CategoryDao();
+                boolean isCreate = dao.update(cat);
+                System.err.println("isCreate" + isCreate);
+                if (isCreate) {
+                    person.put("message", "cập nhật thành công");
+                    // lay thong tin category vừa tạo
+                    CategoryDTO detail = dao.getDetailById(cat.getId());
+                    person.put("data", detail);
+                    String json = new Gson().toJson(person);
+                    response.getWriter().write(json);
+                    return;
+                }
+
+                String json = new Gson().toJson(person);
+                response.getWriter().write(json);
+                   return;
+            }
+         
+        } else {
+            /**
+             * b1: parse dữ dữ liệu từ user JSON b2: dùng GJSOn convert json to
+             * object g.fromJson(body, CategoryDTO.class); b3: them du lieu xong
+             * db va get statuves tra b4: tra status ve cho nguoi dung bang
+             */
+            System.out.println("go here");
+            String body = GlobalFunc.parseBody(request);
+            Gson g = new Gson();
+            CategoryDTO cat = g.fromJson(body, CategoryDTO.class);
+            String name = cat.getName();
+            String des = cat.getDescription();
+            String image = cat.getImage();
+            HashMap<String, Object> person
+                    = new HashMap<String, Object>();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
             if (!name.equals("") && !des.equals("")) {
                 CategoryDTO dto = new CategoryDTO(name, des, image);
                 CategoryDao dao = new CategoryDao();
                 int isCreate = dao.create(dto);
                 if (isCreate > 0) {
-                    person.put("message", "tạo thành công");
                     // lay thong tin category vừa tạo
                     CategoryDTO detail = dao.getDetailById(isCreate);
-                     person.put("message", "tạo thành công");
-                     person.put("data", detail);
-                     String json = new Gson().toJson(person);
-                    response.getWriter().write(json);
-                    return;
+                    person.put("message", "tạo thành công");
+                    person.put("data", detail);
                 }
-               
+
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
+                   return;
             } else {
                 person.put("message", "invalid data");
                 response.setStatus(400);
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
             }
-            System.out.println("${body1}" + body);
+            System.out.println("go here" + body);
+             return;
         }
-//        String name = request.getParameter("name");
-//        String image = rsetequest.getParameter("image");
-//        String description = request.getParameter("description");
-//        if(!name.equals("")) {
-//            System.out.println("image"+image);
-//             System.out.println("description"+description);
-//            CategoryDTO dto = new CategoryDTO(name, image, description);
-//            CategoryDao dao = new CategoryDao();
-//            boolean isCreate = dao.create(dto);
-//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -139,6 +162,18 @@ public class AdminCategoryController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            processRequest(request, response);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

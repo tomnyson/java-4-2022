@@ -44,6 +44,7 @@
 
 <!-- Main JS -->
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/custom.js"></script>
 <!-- Page JS -->
 
