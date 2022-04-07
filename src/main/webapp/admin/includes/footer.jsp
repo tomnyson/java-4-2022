@@ -34,8 +34,7 @@
 <script src="${pageContext.request.contextPath}/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/libs/popper/popper.js"></script>
 <script src="${pageContext.request.contextPath}/assets/vendor/js/bootstrap.js"></script>
-<script src="${pageContext.request.contextPath}/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
+   <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
@@ -46,6 +45,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.toast.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/custom.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/product.js"></script>
 <!-- Page JS -->
 
 <!-- Place this tag in your head or just before your close body tag. -->

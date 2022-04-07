@@ -5,22 +5,23 @@
  */
 
 $(document).ready(function () {
-     CKEDITOR.replace('txtDescription');
     document.getElementById('btnCreate').addEventListener('click', (event) => {
-        $('#catModal').modal('show')
+        $('#productModal').modal('show')
 //        catModal.show()
     })
 
-    const formCat = document.getElementById("categoryForm1")
+    const formCat = document.getElementById("productForm")
     if (formCat) {
-        catModal = new bootstrap.Modal(document.getElementById('catModal'), {
+        catModal = new bootstrap.Modal(document.getElementById('productModal'), {
             keyboard: false
         })
-        document.getElementById("categoryForm1").addEventListener('submit', (event) => {
+        document.getElementById("productForm").addEventListener('submit', (event) => {
             event.preventDefault();
             const txtName = document.querySelector('#txtName').value
             const txtDescription = document.querySelector('#txtDescription').value
             const txtImage = document.querySelector("#image").value || ''
+            const txtPrice = document.querySelector("#price").value || ''
+            const categoryId = document.querySelector("#category").value || ''
             const txtId = document.querySelector("#txtId").value || null
             const errorName = document.querySelector('#error-name')
             const errorDes = document.querySelector('#error-des')
@@ -31,10 +32,12 @@ $(document).ready(function () {
                     id: Number(txtId),
                     name: txtName,
                     description: txtDescription,
-                    image: txtImage
+                    image: txtImage,
+                    price: Number(txtPrice),
+                    categoryId: Number(categoryId)
                 }
                 console.log('jsonObj', jsonObj)
-                fetch('/lessonJSP/admin/AdminCategoryController', {
+                fetch('/lessonJSP/admin/AdminProductController', {
                     method: 'put',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -43,14 +46,12 @@ $(document).ready(function () {
                     body: JSON.stringify(jsonObj)
                 })
                         .then(function (response) {
-                            console.log('response', response)
                             return response.json();
                         })
                         .then(function (result) {
                             const item = result.data
-                            //success
-//                            catModal.hide();
-                            $('#catModal').modal('hide')
+                            console.log('call here')
+                            $('#productModal').modal('hide')
                             $.toast({
                                 heading: 'Success',
                                 text: result.message,
@@ -102,10 +103,12 @@ $(document).ready(function () {
                     const jsonObj = {
                         name: txtName,
                         description: txtDescription,
-                        image: txtImage
+                        image: txtImage,
+                        price: Number(txtPrice),
+                        categoryId: Number(categoryId)
                     }
 
-                    fetch('/lessonJSP/admin/AdminCategoryController', {
+                    fetch('/lessonJSP/admin/AdminProductController', {
                         method: 'post',
                         headers: {
                             'Accept': 'application/json, text/plain, */*',
@@ -114,14 +117,21 @@ $(document).ready(function () {
                         body: JSON.stringify(jsonObj)
                     })
                             .then(function (response) {
-                                console.log('response', response)
                                 return response.json();
                             })
                             .then(function (result) {
                                 //success
 //                                catModal.hide();
                                 const item = result.data
-                                $('#catModal').modal('hide')
+                                $.toast({
+                                    heading: 'Success',
+                                    text: result.message,
+                                    position: 'top-right',
+                                    showHideTransition: 'slide',
+                                    icon: 'success'
+                                })
+                                $('#productModal').modal('hide')
+
                                 $('#catTable tbody tr:first').after(`
                             <tr data-id='${item.id}'>
                         <td><strong>${item.name}</strong></td>
@@ -163,9 +173,9 @@ $(document).ready(function () {
 function resetForm() {
     document.getElementById('categoryForm1').reset();
 }
-function EditCategory(id, item) {
+function EditProduct(id, item) {
     var catModal
-    catModal = new bootstrap.Modal(document.getElementById('catModal'), {
+    catModal = new bootstrap.Modal(document.getElementById('productModal'), {
         keyboard: false
     })
     catModal.show()
@@ -195,18 +205,18 @@ function DeleteCategory(id) {
                     return response.json();
                 })
                 .then(function (result) {
-                     $.toast({
-                                heading: 'Success',
-                                text: result.message,
-                                position: 'top-right',
-                                showHideTransition: 'slide',
-                                icon: 'success'
-                            })
-                            
-                          setTimeout(()=> {
-                             location.reload();  
-                          },2000)
-                   
+                    $.toast({
+                        heading: 'Success',
+                        text: result.message,
+                        position: 'top-right',
+                        showHideTransition: 'slide',
+                        icon: 'success'
+                    })
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000)
+
                 })
                 .catch(function (error) {
                     //failed
@@ -215,4 +225,3 @@ function DeleteCategory(id) {
     }
 
 }
-
