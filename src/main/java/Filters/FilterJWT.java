@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tomnyson
  */
-@WebFilter("/api/*")
+//@WebFilter("/api/*")
 public class FilterJWT implements Filter {
 
     private static final String AUTH_HEADER_KEY = "Authorization";

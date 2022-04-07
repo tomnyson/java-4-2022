@@ -30,10 +30,30 @@
                 <div class="col col-sm-2">
                     <h5>Danh mục</h5>
                     <ul class="list-group">
+                        <c:forEach items="${listCat}" var="cat">
+                            <a class="list-group-item list-group-item-action" 
+                               href="category/${cat.getId()}">${cat.getName()}</a> 
+                        </c:forEach>
                     </ul>
                 </div>
                 <div class="col col-sm-10">
                     <div class="row">
+                        <c:forEach items="${listProduct}" var="prod">
+                            <div class="col-sm-4">
+                                <div class="card" style="width: 18rem;">
+                                    <a href="${pageContext.request.contextPath}/HomeController?id=${prod.getId()}">
+                                  <img class="card-img-top" src="${prod.getImage()}" alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title">${prod.getName()}</h5>
+                                        <h5 class="card-title"> 
+                                            <fmt:formatNumber type="number" maxFractionDigits="2" value="${prod.getPrice()}" /> VNĐ</h5>
+                                        <p class="card-text">${prod.getDescription()}</p>
+                                       <button type="button" style="width: 100px" class="btn btn-primary">BUY</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <ul class="pagination">

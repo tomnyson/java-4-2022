@@ -1,4 +1,5 @@
 /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,26 +10,33 @@ package DTO;
  *
  * @author tomnyson
  */
-public class CategoryDTO {
+public class ProductDTO {
+
     int id;
     String name;
     String description;
+    float price;
     String image;
+    int categoryId;
 
-    public CategoryDTO() {
+    public ProductDTO() {
     }
 
-    public CategoryDTO(int id, String name, String description, String image) {
+    public ProductDTO(int id, String name, String description, float price, String image, int categoryId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.price = price;
         this.image = image;
+        this.categoryId = categoryId;
     }
 
-    public CategoryDTO(String name, String description, String image) {
+    public ProductDTO(String name, String description, float price, String image, int categoryId) {
         this.name = name;
         this.description = description;
+        this.price = price;
         this.image = image;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -43,8 +51,16 @@ public class CategoryDTO {
         return description;
     }
 
+    public float getPrice() {
+        return price;
+    }
+
     public String getImage() {
         return image;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
     }
 
     public void setId(int id) {
@@ -59,8 +75,17 @@ public class CategoryDTO {
         this.description = description;
     }
 
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
     
+
 }

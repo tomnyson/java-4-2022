@@ -1,16 +1,17 @@
+package Controllers.Admin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Admin;
+
 
 import DAO.CategoryDao;
 import DTO.CategoryDTO;
 import Utils.GlobalFunc;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +55,6 @@ public class AdminCategoryController extends HttpServlet {
                 List<CategoryDTO> list = new ArrayList<CategoryDTO>();
                 list = dao.getList();
                 request.setAttribute("list", list);
-                System.out.println(list.size());
                 session.setAttribute("view", "pages/category.jsp");
                 request.getRequestDispatcher("dashboard.jsp").forward(request, response);
             } catch (SQLException ex) {
@@ -91,17 +91,43 @@ public class AdminCategoryController extends HttpServlet {
 
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
-                   return;
+                return;
             }
-         
+
+        } else if (method.equals("DELETE")) {
+            //chuc nang update
+            String body = GlobalFunc.parseBody(request);
+            Gson g = new Gson();
+            HashMap<String, Object> person
+                    = new HashMap<String, Object>();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            CategoryDTO cat = g.fromJson(body, CategoryDTO.class);
+            int id = cat.getId();
+
+            CategoryDao dao = new CategoryDao();
+            boolean isCreate = dao.delete(id);
+            if (isCreate) {
+                person.put("message", "xoá thành công");
+                // lay thong tin category vừa tạo
+                String json = new Gson().toJson(person);
+                response.getWriter().write(json);
+                return;
+            }
+
+            String json = new Gson().toJson(person);
+            response.getWriter().write(json);
+            return;
+
         } else {
             /**
              * b1: parse dữ dữ liệu từ user JSON b2: dùng GJSOn convert json to
              * object g.fromJson(body, CategoryDTO.class); b3: them du lieu xong
              * db va get statuves tra b4: tra status ve cho nguoi dung bang
              */
-            System.out.println("go here");
             String body = GlobalFunc.parseBody(request);
+            System.err.println(body);
             Gson g = new Gson();
             CategoryDTO cat = g.fromJson(body, CategoryDTO.class);
             String name = cat.getName();
@@ -125,15 +151,14 @@ public class AdminCategoryController extends HttpServlet {
 
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
-                   return;
+                return;
             } else {
                 person.put("message", "invalid data");
                 response.setStatus(400);
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
             }
-            System.out.println("go here" + body);
-             return;
+            return;
         }
     }
 
@@ -163,7 +188,7 @@ public class AdminCategoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            processRequest(request, response);
+        processRequest(request, response);
     }
 
     @Override

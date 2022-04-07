@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Admin;
+package Controllers.Admin.API;
 
 import DAO.CategoryDao;
 import DTO.CategoryDTO;
@@ -16,7 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Logger;import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tomnyson
  */
-@WebServlet(name = "AdminAPIController", urlPatterns = {"/api/category/*", "/api/category/:id"})
-public class AdminAPIController extends HttpServlet {
+@WebServlet(name = "APIProductController", urlPatterns = {"/api/product/*", "/api/product/:id"})
+public class APIProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -110,8 +111,9 @@ public class AdminAPIController extends HttpServlet {
             return;
 
         } catch (SQLException ex) {
-            Logger.getLogger(AdminAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(APIProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // add elements dynamically
         // add elements dynamically
 
     }
@@ -142,7 +144,7 @@ public class AdminAPIController extends HttpServlet {
             if (!name.equals("") && !des.equals("")) {
                 CategoryDTO dto = new CategoryDTO(name, des, image);
                 CategoryDao dao = new CategoryDao();
-                boolean isCreate = dao.create(dto);
+                int isCreate = dao.create(dto);
                 person.put("message", "tạo thành công");
                 String json = new Gson().toJson(person);
                 response.getWriter().write(json);
