@@ -1,0 +1,88 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 11, 2021, 8:24:53 AM
+    Author     : tomnyson
+*/
+
+.dangnhap {
+    width: 400px;
+    padding: 30px;
+    margin: 0 auto;
+}
+.dangky, .quenmk {
+    display: block;
+    padding: 5px 0px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.logout {
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+
+}
+
+.gallery-wrap .img-big-wrap img {
+    height: 450px;
+    width: 100%;
+    display: inline-block;
+    cursor: zoom-in;
+}
+
+
+.gallery-wrap .img-small-wrap .item-gallery {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ddd;
+    margin: 7px 2px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.gallery-wrap .img-small-wrap {
+    text-align: center;
+}
+.gallery-wrap .img-small-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: zoom-in;
+}
+.custom-footer {
+    padding: 20px 0;
+    background: #ccc;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left-header {
+    display: flex;
+}
+#navbarSupportedContent {
+    justify-content: space-between
+}
+
+.short-text {
+  white-space: nowrap;
+  max-width: 300px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
