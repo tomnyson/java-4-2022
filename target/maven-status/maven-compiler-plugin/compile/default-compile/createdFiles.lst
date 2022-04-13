@@ -9,8 +9,6 @@ Utils/PasswordHelper.class
 Controllers/logoutController.class
 Filters/FilterJWT.class
 Utils/GlobalFunc.class
-Controllers/Admin/AdminAPIController.class
-Controllers/Admin/AdminCategoryController.class
 DTO/CategoryDTO.class
 Controllers/UserController.class
 DAO/UserDao.class

@@ -49,7 +49,11 @@
                                         <h5 class="card-title"> 
                                             <fmt:formatNumber type="number" maxFractionDigits="2" value="${prod.getPrice()}" /> VNĐ</h5>
                                         <p class="card-text">${prod.getDescription()}</p>
-                                       <button type="button" style="width: 100px" class="btn btn-primary">BUY</button>
+                                        <form action="CartController" method="post">
+                                            <input type="hidden" name="id" value="${prod.getId()}"/>
+                                            <button type="submit" name="cart" value="add" style="width: 100px" class="btn btn-primary">BUY</button>
+                                        </form>
+                                      
                                     </div>
                                 </div>
                             </div>

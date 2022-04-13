@@ -20,6 +20,10 @@
         <servlet-name>AdminCategoryController</servlet-name>
         <servlet-class>Controllers.Admin.AdminCategoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminProductController</servlet-name>
+        <servlet-class>Controllers.Admin.AdminProductController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>AdminCategoryController</servlet-name>
         <url-pattern>/admin/AdminCategoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProductController</servlet-name>
+        <url-pattern>/admin/AdminProductController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
