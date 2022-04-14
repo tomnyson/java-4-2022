@@ -23,15 +23,12 @@ public class Cart {
     
     public boolean add(Item item) {
         try {
-            System.out.println("id" + item.getMaSP());
             if (cart.contains(item)) {
                 // item hien tai
-                System.out.println("go here for update");
                 Item currentItem = cart.get(cart.indexOf(item));
                 currentItem.setSoluong(currentItem.getSoluong() + 1);
                 // update
             } else {
-                   System.out.println("go here for create");
                 cart.add(item);
                 // add
             }

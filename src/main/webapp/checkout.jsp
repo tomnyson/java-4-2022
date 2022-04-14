@@ -18,53 +18,77 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Giỏ hàng</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <style>
+            .tongTien {
+                color: red;
+                margin-top: 20px;
+            }
+        </style>
     </head>
+
     <body>
         <div class="container">
-        <h1>CHI TIẾT GIỎ HÀNG</h1>
-        <a href="HomeController" class="btn btn-info" role="button">Mua Hàng tiếp</a>
-          <a href="checkout.jsp" class="btn btn-success" role="button">Thanh toán</a>
-        <table class="table  table-sm" border="1" width="70%">
-            <tr><th>Tên Sản phẩm</th>
-                <th>Ảnh</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Thêm</th>
-                <th>Xoá</th>
+            <div class="row">
+                <div class="col col-md-6">
+                    <form>
+                        <h4>Thông tin thanh toán</h4>
+                        <div>
+                            <label for="firstName">họ và tên</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <div class="invalid-feedback"> </div>
+                        </div>
+                        <div>
+                            <label for="firstName">SĐT</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <div class="invalid-feedback"> </div>
+                        </div>
+                        <div>
+                            <label for="firstName">Địa chỉ nhận hàng</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <div class="invalid-feedback"> </div>
+                        </div>
+                        <button type="submit"  class="btn btn-info">Thanh Toán</button>
+                    </form>
+                </div>
+                <div class="col col-md-6">
+                    <table class="table  table-sm" border="1" width="70%">
+                        <tr><th>Tên Sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                        </tr>
 
-            </tr>
-            <%
-                Cart cart = (Cart) session.getAttribute("cart");
-                if(cart != null) {
-                 ArrayList<Item> items = cart.getCart();
-                 for (Item item : items) {
-            %>
-                  
-                <form action="cart" method="post">
-            <tr>
-                <td><%= item.getTitle()%></td>
-                <td> <img src="<%= item.getImage()%>" width="200px"/></td>
-                <td><%= item.getSoluong()%></td>
-                <td>
-                    <fmt:formatNumber type="number" maxFractionDigits="2" value="<%= item.getPrice()%>" />
-                </td>
-                <td>
-                        <input type="hidden" name="masp" value=""/>
-                        <button type="submit" name="cart" value="add" class="btn btn-info btn-block">
-                            <small>+</small
-                        </button>
-                </td>
-                <td>
-                        <button type="submit" name="cart" value="remove" class="btn btn-danger btn-block">
-                            <small>x</small
-                        </button>
-                </td>
-            </tr>
-             </form>
-                <% } } %>
-        </table>    
-        </div>
-    </body>
-</html>
+                        <%
+                            Cart cart = (Cart) session.getAttribute("cart");
+                            if (cart != null) {
+                                ArrayList<Item> items = cart.getCart();
+                                for (Item item : items) {
+                        %>
+
+
+                        <tr>
+                            <td><%= item.getTitle()%></td>
+                            <td> <img src="<%= item.getImage()%>" width="200px"/></td>
+                            <td><%= item.getSoluong()%></td>
+                            <td>
+                                <fmt:formatNumber type="number" maxFractionDigits="2" value="<%= item.getPrice()%>" />
+                            </td>
+                        </tr>
+                        </form>
+
+                        <% }%>
+                        <p class="tongTien"><strong >Tổng tiền:  <fmt:formatNumber type="number" maxFractionDigits="2" value="<%= cart.getTongTien()%>" /> VNĐ<strong></p>
+                                    <% }%> 
+
+
+                                    </table> 
+                                    </div>
+                                    </div>
+
+
+                                    </div>
+                                    </body>
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+                                    </html>

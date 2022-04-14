@@ -49,7 +49,7 @@ public class HomeController extends HttpServlet {
             List<CategoryDTO> listCat = new ArrayList<CategoryDTO>();
             listCat = catDao.getList();
             request.setAttribute("listCat", listCat);
-            
+
             String id = request.getParameter("id");
             if (id != null) {
                 // detail page
@@ -59,11 +59,11 @@ public class HomeController extends HttpServlet {
                 request.setAttribute("catDetail", catDetail);
                 request.getRequestDispatcher("productDetail.jsp").forward(request, response);
             }
-            
+
             List<ProductDTO> lisProduct = new ArrayList<ProductDTO>();
-            
+
             lisProduct = productDao.getList();
-          
+
             request.setAttribute("listProduct", lisProduct);
             request.getRequestDispatcher("products.jsp").forward(request, response);
         } catch (Exception e) {
