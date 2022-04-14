@@ -46,6 +46,11 @@ public class OrderDTO {
         this.createAt = createAt;
     }
 
+    public OrderDTO() {
+    }
+
+
+
     public int getId() {
         return id;
     }

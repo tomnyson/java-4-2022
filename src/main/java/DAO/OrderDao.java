@@ -9,7 +9,6 @@ import DTO.Item;
 import DTO.OrderDTO;
 import Utils.DBProvider;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,38 +20,41 @@ import java.util.ArrayList;
  */
 public class OrderDao {
 
-    Connection conn = DBProvider.getConnection();
-
     public boolean insert(OrderDTO order) {
+        Connection conn = DBProvider.getConnection();
         try {
-            String sql = "INSERT INTO order (userId, customerName, addressShip, phone"
-                    + ", total, createAt)"
-                    + " VALUES(?, ?, ?, ?, ?, ?)";
+            System.out.println("them order");
+            String sql = "INSERT INTO orders(customerName, phone, addressShip, total, status, createAt) VALUES(?, ?, ?, ?,?, ?)";
             if (conn != null) {
                 PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pst.setInt(1, order.getUserId());
-                pst.setString(2, order.getCustomerName());
+                pst.setString(1, order.getCustomerName());
+                pst.setString(2, order.getPhone());
                 pst.setString(3, order.getAddressShip());
-                pst.setString(4, order.getPhone());
-                pst.setFloat(5, order.getTotal());
-                pst.setDate(5, (Date) order.getCreateAt());
+                pst.setFloat(4, order.getTotal());
+                pst.setString(5, "PENDING");
+                pst.setDate(6, java.sql.Date.valueOf(java.time.LocalDate.now()));
                 int result = pst.executeUpdate();
                 long orderId = 0;
                 if (result > 0) {
+                    System.err.println("go here sql detail");
                     ResultSet generatedKeys = pst.getGeneratedKeys();
 
                     if (generatedKeys.next()) {
                         orderId = generatedKeys.getInt(1);
                     }
+
                     if (orderId > 0) {
+                        Integer orderIdConvert = (int) (long) orderId;
                         ArrayList<Item> items = order.getItems();
+                        String sqlDetail2 = "INSERT INTO order_details (orderId, productId, price, quantity) VALUES(?, ?, ?, ?)";
+                        PreparedStatement pst1 = conn.prepareStatement(sqlDetail2);
+
                         for (Item item : items) {
-                            String sqlDetail = "INSERT INTO orderDetail (orderId, productId, price, quantity) VALUES(?, ?, ?, ?, ?)";
-                            pst.setInt(1, (int) orderId);
-                            pst.setInt(2, (int) item.getMaSP());
-                            pst.setInt(3, (int) item.getPrice());
-                            pst.setInt(4, (int) item.getSoluong());
-                            pst.executeUpdate();
+                            pst1.setInt(1, orderIdConvert);
+                            pst1.setInt(2, item.getMaSP());
+                            pst1.setFloat(3,item.getPrice());
+                            pst1.setInt(4, item.getSoluong());
+                            pst1.executeUpdate();
                         }
 
                     }

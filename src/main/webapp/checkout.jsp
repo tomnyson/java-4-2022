@@ -31,21 +31,21 @@
         <div class="container">
             <div class="row">
                 <div class="col col-md-6">
-                    <form>
+                    <form method="post" action="CheckoutController">
                         <h4>Thông tin thanh toán</h4>
                         <div>
                             <label for="firstName">họ và tên</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <input type="text" class="form-control"  name="customerName" >
                             <div class="invalid-feedback"> </div>
                         </div>
                         <div>
                             <label for="firstName">SĐT</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <input type="text" class="form-control" name="phone" ">
                             <div class="invalid-feedback"> </div>
                         </div>
                         <div>
                             <label for="firstName">Địa chỉ nhận hàng</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <input type="text" class="form-control" name="addressShip" >
                             <div class="invalid-feedback"> </div>
                         </div>
                         <button type="submit"  class="btn btn-info">Thanh Toán</button>
