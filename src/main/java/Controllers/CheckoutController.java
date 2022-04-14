@@ -5,13 +5,19 @@
  */
 package Controllers;
 
+import DAO.OrderDao;
+import DTO.Cart;
+import DTO.OrderDTO;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,12 +38,38 @@ public class CheckoutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String method = request.getMethod();
-        if(method.equals("POST")) {
-        }else {
-        // get
-         response.sendRedirect("./checkout.jsp");
+        if (method.equals("POST")) {
+            System.err.println("go here post");
+            String nameCustomer = request.getParameter("customerName");
+            String phone = request.getParameter("phone");
+            String addressShip = request.getParameter("addressShip");
+            HttpSession session = request.getSession();
+            Cart cart = (Cart) session.getAttribute("cart");
+            if (cart != null) {
+                // thêm product
+                //int userId, String customerName, String addressShip, String phone, float total, String status, ArrayList<Item> items, Date createAt
+                OrderDTO order = new OrderDTO();
+                order.setCustomerName(nameCustomer);
+                order.setAddressShip(addressShip);
+                order.setPhone(phone);
+                order.setUserId(0);
+                order.setItems(cart.getCart());
+                order.setTotal(cart.getTongTien());
+                java.util.Date utilDate = new java.util.Date();
+                order.setCreateAt(utilDate);
+                OrderDao dao = new OrderDao();
+                dao.insert(order);
+                session.removeAttribute("cart");
+                response.sendRedirect("HomeController");
+            } else {
+                response.sendRedirect("HomeController");
+            }
+
+        } else {
+            // get
+            response.sendRedirect("./checkout.jsp");
         }
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
