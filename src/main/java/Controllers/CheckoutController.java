@@ -39,14 +39,12 @@ public class CheckoutController extends HttpServlet {
             throws ServletException, IOException {
         String method = request.getMethod();
         if (method.equals("POST")) {
-            System.err.println("go here post");
             String nameCustomer = request.getParameter("customerName");
             String phone = request.getParameter("phone");
             String addressShip = request.getParameter("addressShip");
             HttpSession session = request.getSession();
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart != null) {
-                // thêm product
                 //int userId, String customerName, String addressShip, String phone, float total, String status, ArrayList<Item> items, Date createAt
                 OrderDTO order = new OrderDTO();
                 order.setCustomerName(nameCustomer);
@@ -60,7 +58,7 @@ public class CheckoutController extends HttpServlet {
                 OrderDao dao = new OrderDao();
                 dao.insert(order);
                 session.removeAttribute("cart");
-                response.sendRedirect("HomeController");
+                response.sendRedirect("./confirm.jsp");
             } else {
                 response.sendRedirect("HomeController");
             }

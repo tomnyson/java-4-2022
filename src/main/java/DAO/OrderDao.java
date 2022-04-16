@@ -23,7 +23,6 @@ public class OrderDao {
     public boolean insert(OrderDTO order) {
         Connection conn = DBProvider.getConnection();
         try {
-            System.out.println("them order");
             String sql = "INSERT INTO orders(customerName, phone, addressShip, total, status, createAt) VALUES(?, ?, ?, ?,?, ?)";
             if (conn != null) {
                 PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -36,7 +35,6 @@ public class OrderDao {
                 int result = pst.executeUpdate();
                 long orderId = 0;
                 if (result > 0) {
-                    System.err.println("go here sql detail");
                     ResultSet generatedKeys = pst.getGeneratedKeys();
 
                     if (generatedKeys.next()) {
